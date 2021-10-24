@@ -25,7 +25,7 @@ void print_list(struct song_node *g){
     }
     printf("Song=%s, Artist=%s",temp->song,temp->artist);
     printf("}\n");
-  }
+  }else{printf("ERROR: List Does Not Exist\n");}
 }
 
 //Inserts a node to the front of the linked list.
@@ -111,7 +111,7 @@ int compare_nodes(struct song_node* first, struct song_node* second){
    struct song_node* back=NULL;
    struct song_node* t=top;
    struct song_node* ret=top;
-
+   if(top==NULL){ret=sn;}
    while(t){
      if(compare_nodes(sn,t)>0){
        back=t;
@@ -144,18 +144,13 @@ int num_elems(struct song_node* top) {
 struct song_node* random_elem(struct song_node* top) {
   struct song_node* elem;
   int n = num_elems(top);
-
   srand(time(NULL));
-
-  int index = rand() % n+1;
+  int index = rand() % n;
   int i;
-
   while(index) {
     top = top->next;
     index--;
   }
-
   elem = top;
-
   return elem;
 }
