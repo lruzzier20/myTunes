@@ -98,14 +98,17 @@ struct song_node* first_song(struct song_node *front, char *a) {
   return NULL;
 }
 
+//Helper function to compare nodes.
 int compare_nodes(struct *song_node first, struct *song_node second){
    int artint=strcmp(first->artist,second->artist);
    if(!artint){return artint;}
    return strcmp(first->song,second->song);
  }
 
+//Inserts node alphabetically.
  struct song_node* insert_alph(struct song_node* top, char* s, char* a){
-   struct song_node* sn=insert_front(NULL, s, a);
+   struct song_node* sn = malloc(sizeof(struct song_node));
+   sn=insert_front(NULL, s, a);
    struct song_node* back=NULL;
    struct song_node* t=top;
    struct song_node* ret=top;
@@ -126,4 +129,19 @@ int compare_nodes(struct *song_node first, struct *song_node second){
      return ret;
    }
   }
+}
+
+//Returns a pointer to a random element in the list.
+struct song_node* random_elem(struct song_node* top) {
+  srand(time(0));
+  int index = rand() % 27;
+
+  for (int i = 0; i < index; i++) {
+    top = top->next;
+  }
+
+  struct song_node* result = malloc(sizeof(struct song_node));
+  result = top;
+
+  return result;
 }
