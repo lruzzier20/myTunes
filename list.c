@@ -11,19 +11,21 @@ struct song_node{
 
 //Helper function for print_list.
 void structprnt(struct song_node *f){
-  printf("Song=%s, Artist=%d\n",f->song,f->artist);
+  printf("Song=%s, Artist=%s\n",f->song,f->artist);
 }
 
 //Prints linked list.
 void print_list(struct song_node *g){
   if(g) {
   struct song_node* temp=g;
-
-  while(temp->next){
-    structprnt(temp);
-    temp=temp->next;
+  printf("{");
+    while(temp->next){
+      structprnt(temp);
+      temp=temp->next;
+    }
+    printf("Song=%s, Artist=%s",temp->song,temp->artist);
+    printf("}\n");
   }
-  structprnt(temp);
 }
 
 //Inserts a node to the front of the linked list.
@@ -51,7 +53,7 @@ struct song_node* remove_node(struct song_node *front, char* s, char* a){
   struct song_node* back=NULL;
   struct song_node* t=front;
   struct song_node* ret=front;
-
+  struct song_node* temp;
   while(t){
     if(strcmp(t->song,s) && strcmp(t->artist,a)){
       back=t;
@@ -64,8 +66,9 @@ struct song_node* remove_node(struct song_node *front, char* s, char* a){
       else{
         ret=t->next;
       }
+      temp=t;
       t=t->next;
-      free(t);
+      free(temp);
     }
   }
 
@@ -74,34 +77,30 @@ struct song_node* remove_node(struct song_node *front, char* s, char* a){
 
 //Returns pointer to node with specified artist and song name.
 struct song_node* artist_song(struct song_node *front, char* s, char* a) {
-  if (strcmp(front->song, s) && strcmp(front->artist, a)) {
-    struct song_node *track = malloc(sizeof(struct song_node));
-    track = front;
-    return track;
+  if (!strcmp(front->song, s) && !strcmp(front->artist, a)) {
+    return front;
   }
   if (front->next != NULL) {
-    artist_song(front->next, s, a);
+    return artist_song(front->next, s, a);
   }
   return NULL;
 }
 
 //Returns pointer to node with the first song of a specified artist in the linked list.
 struct song_node* first_song(struct song_node *front, char *a) {
-  if (strcmp(front->artist, a)) {
-    struct song_node *track = malloc(sizeof(struct song_node));
-    track = front;
-    return track;
+  if (!strcmp(front->artist, a)) {
+    return front;
   }
   if (front->next != NULL) {
-    first_song(front->next, a);
+    return first_song(front->next, a);
   }
   return NULL;
 }
 
 //Helper function to compare nodes.
-int compare_nodes(struct *song_node first, struct *song_node second){
+int compare_nodes(struct song_node* first, struct song_node* second){
    int artint=strcmp(first->artist,second->artist);
-   if(!artint){return artint;}
+   if(artint){return artint;}
    return strcmp(first->song,second->song);
  }
 
@@ -114,20 +113,20 @@ int compare_nodes(struct *song_node first, struct *song_node second){
    struct song_node* ret=top;
 
    while(t){
-     if(compare_node(sn,t)>0){
+     if(compare_nodes(sn,t)>0){
        back=t;
-       t=t->next;
+       if(t->next==NULL){t->next=sn; t=NULL;}else{t=t->next;}
      }else{
-       if(back!=null){
+       if(back!=NULL){
          back->next=sn;
          sn->next=t;
+         return ret;
        }else{
          sn->next=t;
          ret=sn;
          t=NULL;
        }
-     return ret;
-   }
+     }
   }
 }
 
