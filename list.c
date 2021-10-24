@@ -132,10 +132,31 @@ int compare_nodes(struct *song_node first, struct *song_node second){
 }
 
 int num_elems(struct song_node* top) {
-  int ans = 0;
+  int i = 0;
   while(top) {
-    ans++;
+    i++;
     top = top->next;
   }
-  return ans;
+  return i;
+}
+
+
+//Returns a pointer to a random element in the list.
+struct song_node* random_elem(struct song_node* top) {
+  struct song_node* elem;
+  int n = num_elems(top);
+
+  srand(time(NULL));
+
+  int index = rand() % n+1;
+  int i;
+
+  while(index) {
+    top = top->next;
+    index--;
+  }
+
+  elem = top;
+
+  return elem;
 }
