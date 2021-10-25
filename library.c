@@ -65,11 +65,11 @@ void print_lib(struct song_node** lib){
   if(lib!=NULL){
   for(int i=0;i<27;i++){
     if(lib[i]){print_list(lib[i]);}
-  }}
+  }
+}
 }
 
 void shuffle_songs(struct song_node** lib){
-  srand(time(NULL));
   int temp=0;
   for(int i=0;i<100;i++){
     temp=rand()%27;

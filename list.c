@@ -48,7 +48,7 @@ struct song_node* free_list(struct song_node* start){
 
   free(start);}
 
-  return start;
+  return NULL;
 }
 
 //Removes specified node.
@@ -58,13 +58,14 @@ struct song_node* remove_node(struct song_node *front, char* s, char* a){
   struct song_node* ret=front;
   struct song_node* temp;
   while(t){
-    if(strcmp(t->song,s) && strcmp(t->artist,a)){
+    if(strcmp(t->song,s) || strcmp(t->artist,a)){
       back=t;
       t=t->next;
     }
     else{
       if(back!=NULL){
         back->next=t->next;
+        return ret;
       }
       else{
         ret=t->next;
@@ -97,6 +98,7 @@ struct song_node* first_song(struct song_node *front, char *a) {
   if (front->next != NULL) {
     return first_song(front->next, a);
   }
+  printf("Artist not found");
   return NULL;
 }
 
