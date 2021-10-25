@@ -11,7 +11,9 @@ struct song_node{
 
 //Helper function for print_list.
 void structprnt(struct song_node *f){
-  printf("Song=%s, Artist=%s\n",f->song,f->artist);
+  if(f){
+  printf("Song=%s, Artist=%s\n",f->song,f->artist);}
+  else{printf("ERROR: List Does Not Exist\n");}
 }
 
 //Prints linked list.
@@ -39,11 +41,12 @@ struct song_node* insert_front(struct song_node* top, char* s, char* a){
 
 //Frees the linked list.
 struct song_node* free_list(struct song_node* start){
+  if(start!=NULL){
   if(start->next!=NULL){
     free_list(start->next);
   }
 
-  free(start);
+  free(start);}
 
   return start;
 }
@@ -115,7 +118,7 @@ int compare_nodes(struct song_node* first, struct song_node* second){
    while(t){
      if(compare_nodes(sn,t)>0){
        back=t;
-       if(t->next==NULL){t->next=sn; t=NULL;}else{t=t->next;}
+       if(t->next==NULL){t->next=sn; return ret;}else{t=t->next;}
      }else{
        if(back!=NULL){
          back->next=sn;
@@ -144,9 +147,7 @@ int num_elems(struct song_node* top) {
 struct song_node* random_elem(struct song_node* top) {
   struct song_node* elem;
   int n = num_elems(top);
-  srand(time(NULL));
   int index = rand() % n;
-  int i;
   while(index) {
     top = top->next;
     index--;
